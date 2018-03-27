@@ -45,6 +45,11 @@ public class Word {
         return createdOn.toString();
     }
 
+    @Override
+    public String toString(){
+        return this.title + "\n\n" + this.definition + "\n";
+    }
+
     @NonNull
     public String getTitle() {
         return title;

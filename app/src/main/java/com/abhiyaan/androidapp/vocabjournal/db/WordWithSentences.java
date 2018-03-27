@@ -42,4 +42,9 @@ public class WordWithSentences {
     public void setSentences(List<Sentence> sentences) {
         this.sentences = sentences;
     }
+
+    @Override
+    public String toString(){
+        return word.toString() + "\nSentences:\n" + getSentencesString();
+    }
 }
