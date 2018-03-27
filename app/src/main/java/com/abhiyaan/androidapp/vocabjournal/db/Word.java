@@ -1,6 +1,7 @@
 package com.abhiyaan.androidapp.vocabjournal.db;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
@@ -11,7 +12,7 @@ import java.util.Date;
 /**
  * Created by Binaya Bhattarai on 3/26/2018.
  */
-
+@Entity
 public class Word {
 
     @PrimaryKey
@@ -37,6 +38,37 @@ public class Word {
     @Ignore
     public Word(String title, String definition, Date createdOn){
         this(title, definition);
+        this.createdOn = createdOn;
+    }
+
+    public String getCreatedOnAsString(){
+        return createdOn.toString();
+    }
+
+    @NonNull
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(@NonNull String title) {
+        this.title = title;
+    }
+
+    @NonNull
+    public String getDefinition() {
+        return definition;
+    }
+
+    public void setDefinition(@NonNull String definition) {
+        this.definition = definition;
+    }
+
+    @NonNull
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(@NonNull Date createdOn) {
         this.createdOn = createdOn;
     }
 }
