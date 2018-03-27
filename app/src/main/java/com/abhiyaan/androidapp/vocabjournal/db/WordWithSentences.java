@@ -30,6 +30,15 @@ public class WordWithSentences {
         return sentences;
     }
 
+    public String getSentencesString(){
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<sentences.size(); i++){
+            sb.append(sentences.get(i).getContent());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     public void setSentences(List<Sentence> sentences) {
         this.sentences = sentences;
     }
