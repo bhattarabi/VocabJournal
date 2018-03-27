@@ -18,28 +18,21 @@ import java.util.List;
 
 public class WordViewModel extends AndroidViewModel{
 
-    private LiveData<Word> currentWord;
-
-    private LiveData<List<Sentence>> sentences;
+    private LiveData<WordWithSentences> currentWord;
 
     private AppRepository appRepository;
 
-    public void init(WordWithSentences wordWithSentences){
-        appRepository = new AppRepository();
-        //TODO
+    public void init(String wordTitle){
         //setup currentWord
-        //setup sentences
+        currentWord = appRepository.getWord(wordTitle);
     }
 
     public WordViewModel(@NonNull Application application) {
         super(application);
+        appRepository = new AppRepository(application);
     }
 
-    public LiveData<Word> getCurrentWord() {
+    public LiveData<WordWithSentences> getCurrentWord() {
         return currentWord;
-    }
-
-    public LiveData<List<Sentence>> getSentences() {
-        return sentences;
     }
 }
