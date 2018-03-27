@@ -15,7 +15,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Binaya Bhattarai on 3/27/2018.
  */
 
-public class AppWebInterface {
+public class AppWebService {
 
     HttpUtils httpUtils = new HttpUtils();
 
