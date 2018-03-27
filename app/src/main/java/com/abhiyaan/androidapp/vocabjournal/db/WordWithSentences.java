@@ -3,6 +3,7 @@ package com.abhiyaan.androidapp.vocabjournal.db;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Relation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class WordWithSentences {
     Word word;
 
     @Relation(parentColumn = "title", entityColumn = "word_id", entity = Sentence.class)
-    List<Sentence> sentences;
+    List<Sentence> sentences = new ArrayList<>();
 
     public Word getWord() {
         return word;
