@@ -21,9 +21,6 @@ public interface SentenceDao{
     @Insert(onConflict = IGNORE)
     void insert(Sentence sentence);
 
-    @Query("select * from sentence where word_id = :wordId ")
-    LiveData<List<Sentence>> getSentencesForWord(String wordId);
-
     @Insert(onConflict = REPLACE)
     void update(Sentence sentence);
 
