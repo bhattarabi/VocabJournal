@@ -19,10 +19,10 @@ public class AppWebService {
 
     HttpUtils httpUtils = new HttpUtils();
 
-    public LiveData<Word> getDefinition(String word){
-        final MutableLiveData<Word> newWord = new MutableLiveData<>();
-        newWord.setValue(getDefinitionFromWeb(word));
-        return newWord;
+    public Word getDefinition(String word){
+//        final MutableLiveData<Word> newWord = new MutableLiveData<>();
+//        newWord.setValue(getDefinitionFromWeb(word));
+        return getDefinitionFromWeb(word);
     }
 
 
