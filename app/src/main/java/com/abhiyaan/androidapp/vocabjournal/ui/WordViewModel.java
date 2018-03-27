@@ -28,4 +28,12 @@ public class WordViewModel extends AndroidViewModel{
     public WordViewModel(@NonNull Application application) {
         super(application);
     }
+
+    public LiveData<Word> getCurrentWord() {
+        return currentWord;
+    }
+
+    public LiveData<List<Sentence>> getSentences() {
+        return sentences;
+    }
 }
