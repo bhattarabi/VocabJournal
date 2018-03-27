@@ -34,6 +34,9 @@ public interface WordDao {
     @Insert(onConflict = IGNORE)
     void insert(Word word);
 
+    @Query("select * from word where title = :title")
+    Word getWordSync(String title);
+
 
     //TODO
 //    @Query("select * from word where created_on < :date")
