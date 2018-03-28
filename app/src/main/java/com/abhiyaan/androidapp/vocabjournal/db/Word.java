@@ -27,12 +27,15 @@ public class Word {
     @ColumnInfo(name = "created_on")
     private Date createdOn;
 
-    public Word(){}
+    public Word(){
+        this.createdOn = new Date();
+    }
 
     @Ignore
     public Word(String title, String definition){
         this.title = title;
         this.definition = definition;
+        this.createdOn = new Date();
     }
 
     @Ignore

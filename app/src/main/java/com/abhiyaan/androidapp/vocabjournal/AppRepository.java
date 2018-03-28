@@ -10,6 +10,8 @@ import com.abhiyaan.androidapp.vocabjournal.db.Word;
 import com.abhiyaan.androidapp.vocabjournal.db.WordDao;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
 
+import static com.abhiyaan.androidapp.vocabjournal.AppWebService.BAD_WORD;
+
 /**
  * Created by Binaya Bhattarai on 3/27/2018.
  */
@@ -25,19 +27,35 @@ public class AppRepository {
     }
 
     public LiveData<WordWithSentences> getWord(String wordTitle){
-        refreshWord(wordTitle);
+        if (!refreshWord(wordTitle))
+            wordTitle = BAD_WORD;
         return appDatabase.wordDao().getWordWithSentences(wordTitle);
     }
 
-    private void refreshWord(String wordTitle){
+    private boolean refreshWord(String wordTitle){
         String log;
-        if (appDatabase.wordDao().getWordSync(wordTitle) == null){
+        Word wordEntryInDb = appDatabase.wordDao().getWordSync(wordTitle);
+        boolean returnBoolean = true;
+
+        if (wordEntryInDb == null){
             log = "from the Web";
-            appDatabase.wordDao().insert(appWebService.getDefinition(wordTitle));
+            wordEntryInDb = appWebService.getDefinition(wordTitle);
+
+            //bad http response; return BAD_WORD definition from local db
+            if (wordEntryInDb.getTitle().equals(BAD_WORD)) {
+                returnBoolean = false;
+            }
+            else {
+                //TODO optimize BAD_WORD retrieval
+                //BAD_WORD is being added to db every time
+                //add BAD_WORD entry to db one time upon creation and get rid of this else block
+                appDatabase.wordDao().insert(wordEntryInDb);
+            }
         }
         else{
             log = "from local DB";
         }
-        Log.i("fetchWord:", log);
+        Log.i("fetching Word Entry:", log);
+        return returnBoolean;
     }
 }

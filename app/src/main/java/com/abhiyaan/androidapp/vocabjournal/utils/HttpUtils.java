@@ -1,5 +1,7 @@
 package com.abhiyaan.androidapp.vocabjournal.utils;
 
+import android.util.Log;
+
 import com.abhiyaan.androidapp.vocabjournal.Definition;
 import com.abhiyaan.androidapp.vocabjournal.LexicalEntry;
 
@@ -47,9 +49,20 @@ public class HttpUtils {
         return urlConnection;
     }
 
+    public boolean getsValidResponse(HttpsURLConnection urlConn){
+        int response = -1;
+        try {
+            response = urlConn.getResponseCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            Log.i("http response:", String.valueOf(response));
+            return response == 200;
+        }
+    }
+
     // read the output from the server
     public String readFromUrlConnection(HttpsURLConnection urlConn){
-
         try {
             StringBuilder stringBuilder = new StringBuilder();
             BufferedReader reader = new BufferedReader(

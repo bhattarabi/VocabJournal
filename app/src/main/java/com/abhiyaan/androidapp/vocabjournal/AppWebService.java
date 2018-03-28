@@ -17,6 +17,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class AppWebService {
 
+    public static final String NO_DEFINITION =
+            "No entries found in dictionary! Please modify your search and try again.";
+    public static final String BAD_WORD = "bad_word_no_definition";
+
     HttpUtils httpUtils = new HttpUtils();
 
     public Word getDefinition(String word){
@@ -29,17 +33,21 @@ public class AppWebService {
     private Word getDefinitionFromWeb(String wordTitle) {
 
         HttpsURLConnection urlConn = httpUtils.makeUrlConnection(wordTitle);
+        String definition = NO_DEFINITION;
+        String title = BAD_WORD;
 
-        String jsonResponse = httpUtils.readFromUrlConnection(
-                httpUtils.makeUrlConnection(wordTitle));
+        if (httpUtils.getsValidResponse(urlConn)){
+            title = wordTitle;
+            definition = "";
+            String jsonResponse = httpUtils.readFromUrlConnection(
+                    httpUtils.makeUrlConnection(wordTitle));
 
-        ArrayList<LexicalEntry> defs =
-                httpUtils.getDictionaryEntriesFromJson(jsonResponse);
+            ArrayList<LexicalEntry> defs =
+                    httpUtils.getDictionaryEntriesFromJson(jsonResponse);
 
-        String definition = "";
-        for (LexicalEntry l: defs)
-            definition += l+"\n\n";
-
-        return new Word(wordTitle, definition, new Date());
+            for (LexicalEntry l: defs)
+                definition += l+"\n\n";
+        }
+        return new Word(title, definition);
     }
 }
