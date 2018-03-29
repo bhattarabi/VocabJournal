@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.abhiyaan.androidapp.vocabjournal.db.AppDatabase;
+import com.abhiyaan.androidapp.vocabjournal.db.Sentence;
 import com.abhiyaan.androidapp.vocabjournal.db.Word;
 import com.abhiyaan.androidapp.vocabjournal.db.WordDao;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
@@ -57,5 +58,9 @@ public class AppRepository {
         }
         Log.i("fetching Word Entry:", log);
         return returnBoolean;
+    }
+
+    public void createSentence(Sentence sentence) {
+        appDatabase.sentenceDao().insert(sentence);
     }
 }

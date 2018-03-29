@@ -36,11 +36,15 @@ public class SentencesListFragment extends Fragment {
                 inflater, R.layout.sentences_list_fragment, container, false);
 
         sentenceListRecyclerViewAdapter = new SentenceListRecyclerViewAdapter(
-                new ArrayList<Sentence>(), null);
+                new ArrayList<Sentence>(), (View.OnClickListener)getActivity());
+
         sentencesListFragmentBinding.sentencesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext()));
         sentencesListFragmentBinding.sentencesRecyclerView.
                 setAdapter(sentenceListRecyclerViewAdapter);
+
+        sentencesListFragmentBinding.fabAddSentence.setOnClickListener(
+                (View.OnClickListener)getActivity());
 
         return sentencesListFragmentBinding.getRoot();
     }

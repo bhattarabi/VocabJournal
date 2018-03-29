@@ -4,4 +4,5 @@
     <string name="submit">Submit</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="enter_sentence_hint">Enter new usage example...</string>
 </resources>

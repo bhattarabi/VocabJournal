@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.abhiyaan.androidapp.vocabjournal.AppRepository;
+import com.abhiyaan.androidapp.vocabjournal.db.Sentence;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
 
 /**
@@ -21,12 +22,19 @@ public class WordViewModel extends AndroidViewModel{
     private boolean isLoaded;
     private boolean isSoftKeyHidden;
 
+
     public void getWord(String wordTitle){
         //setup currentWord
         currentWord = appRepository.getWord(wordTitle);
         if (!isSoftKeyHidden){
             isSoftKeyHidden = true;
         }
+    }
+
+    public void createSentence(String content) {
+        appRepository.createSentence(
+                new Sentence(content, getCurrentWord().getValue().getWord().getTitle())
+        );
     }
 
     public WordViewModel(@NonNull Application application) {
@@ -55,4 +63,6 @@ public class WordViewModel extends AndroidViewModel{
     public boolean isSoftKeyHidden(){
         return isSoftKeyHidden;
     }
+
+
 }
