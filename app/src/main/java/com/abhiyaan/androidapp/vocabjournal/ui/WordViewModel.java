@@ -6,11 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.abhiyaan.androidapp.vocabjournal.AppRepository;
-import com.abhiyaan.androidapp.vocabjournal.db.Sentence;
-import com.abhiyaan.androidapp.vocabjournal.db.Word;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
-
-import java.util.List;
 
 /**
  * Created by Binaya Bhattarai on 3/27/2018.
@@ -22,17 +18,41 @@ public class WordViewModel extends AndroidViewModel{
 
     private AppRepository appRepository;
 
-    public void init(String wordTitle){
+    private boolean isLoaded;
+    private boolean isSoftKeyHidden;
+
+    public void getWord(String wordTitle){
         //setup currentWord
         currentWord = appRepository.getWord(wordTitle);
+        if (!isSoftKeyHidden){
+            isSoftKeyHidden = true;
+        }
     }
 
     public WordViewModel(@NonNull Application application) {
         super(application);
         appRepository = new AppRepository(application);
+        isLoaded = false;
+        isSoftKeyHidden = false;
+    }
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        isLoaded = loaded;
     }
 
     public LiveData<WordWithSentences> getCurrentWord() {
         return currentWord;
+    }
+
+    public void setSoftKeyHidden(Boolean isSoftKeyHidden){
+        this.isSoftKeyHidden = isSoftKeyHidden;
+    }
+
+    public boolean isSoftKeyHidden(){
+        return isSoftKeyHidden;
     }
 }

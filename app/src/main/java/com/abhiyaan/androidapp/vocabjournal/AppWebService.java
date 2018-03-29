@@ -46,7 +46,7 @@ public class AppWebService {
                     httpUtils.getDictionaryEntriesFromJson(jsonResponse);
 
             for (LexicalEntry l: defs)
-                definition += l+"\n\n";
+                definition += l+"\n";
         }
         return new Word(title, definition);
     }
