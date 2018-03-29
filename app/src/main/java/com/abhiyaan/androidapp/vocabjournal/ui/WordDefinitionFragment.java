@@ -37,7 +37,7 @@ public class WordDefinitionFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ViewModelProviders.of(getActivity())
-            .get(WordViewModel.class)
+            .get(SingleWordViewModel.class)
             .getCurrentWord().observe(this, new Observer<WordWithSentences>() {
             @Override
             public void onChanged(@Nullable WordWithSentences wordWithSentences) {

@@ -13,7 +13,7 @@ import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
  * Created by Binaya Bhattarai on 3/27/2018.
  */
 
-public class WordViewModel extends AndroidViewModel{
+public class SingleWordViewModel extends AndroidViewModel{
 
     private LiveData<WordWithSentences> currentWord;
 
@@ -37,7 +37,7 @@ public class WordViewModel extends AndroidViewModel{
         );
     }
 
-    public WordViewModel(@NonNull Application application) {
+    public SingleWordViewModel(@NonNull Application application) {
         super(application);
         appRepository = new AppRepository(application);
         isLoaded = false;

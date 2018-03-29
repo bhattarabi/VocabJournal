@@ -7,6 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -45,7 +46,8 @@ public class Word {
     }
 
     public String getCreatedOnAsString(){
-        return createdOn.toString();
+        String dateString = new SimpleDateFormat("MM-dd-yyyy").format(createdOn);
+        return "Created on: " + dateString;
     }
 
     @Override

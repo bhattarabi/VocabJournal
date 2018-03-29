@@ -17,7 +17,6 @@ import com.abhiyaan.androidapp.vocabjournal.db.Sentence;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Binaya Bhattarai on 3/24/2018.
@@ -52,8 +51,8 @@ public class SentencesListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        WordViewModel viewModel =
-                ViewModelProviders.of(getActivity()).get(WordViewModel.class);
+        SingleWordViewModel viewModel =
+                ViewModelProviders.of(getActivity()).get(SingleWordViewModel.class);
 
         viewModel.getCurrentWord().observe(this, new Observer<WordWithSentences>() {
             @Override

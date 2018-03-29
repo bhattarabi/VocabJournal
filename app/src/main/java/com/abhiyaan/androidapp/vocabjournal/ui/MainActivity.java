@@ -1,26 +1,31 @@
-package com.abhiyaan.androidapp.vocabjournal;
+package com.abhiyaan.androidapp.vocabjournal.ui;
 
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.abhiyaan.androidapp.vocabjournal.R;
 import com.abhiyaan.androidapp.vocabjournal.databinding.ActivityMainBinding;
-import com.abhiyaan.androidapp.vocabjournal.ui.WordViewModel;
-import com.abhiyaan.androidapp.vocabjournal.ui.WordViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener{
 
-    WordViewModel wordViewModel;
+    public static final String WORD_ARG = "word_arg";
+
+    SingleWordViewModel singleWordViewModel;
     ActivityMainBinding activityMainBinding;
 
     WordViewPagerAdapter wordViewPagerAdapter;
@@ -33,8 +38,15 @@ public class MainActivity extends AppCompatActivity
                 this, R.layout.activity_main);
         activityMainBinding.setSubmitClickListener(this);
 
-        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
-        if (wordViewModel.isLoaded())
+        singleWordViewModel = ViewModelProviders.of(this).get(SingleWordViewModel.class);
+
+        String wordArg = getIntent().getStringExtra(WORD_ARG);
+
+        if (wordArg != null){
+            new GetWordTask().execute(wordArg);
+        }
+
+        if (singleWordViewModel.isLoaded())
             createFragments();
     }
 
@@ -45,19 +57,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.i("resuming", String.valueOf(wordViewModel.isSoftKeyHidden()));
-        if (wordViewModel.isSoftKeyHidden()){
-            hideSoftKeys();
-        }
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.et_query:
-                wordViewModel.setSoftKeyHidden(false);
+                singleWordViewModel.setSoftKeyHidden(false);
                 break;
 
             case R.id.fab_add_sentence:
@@ -71,10 +74,11 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.btn_submit_query:
-                new GetWordTask().execute(activityMainBinding.etQuery.getText().toString());
+                new GetWordTask().execute(
+                        activityMainBinding.etQuery.getText().toString().toLowerCase());
 
             default:
-                wordViewModel.setSoftKeyHidden(true);
+                singleWordViewModel.setSoftKeyHidden(true);
                 hideSoftKeys();
         }
     }
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(String... strings) {
-            wordViewModel.createSentence(strings[0]);
+            singleWordViewModel.createSentence(strings[0]);
             return null;
         }
 
@@ -122,17 +126,37 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(String... strings) {
-            wordViewModel.getWord(strings[0]);
+            singleWordViewModel.getWord(strings[0]);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void v){
-            if (!wordViewModel.isLoaded()) {
+            if (!singleWordViewModel.isLoaded()) {
                 createFragments();
-                wordViewModel.setLoaded(true);
+                singleWordViewModel.setLoaded(true);
             }
             wordViewPagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.menuitem_mywords:
+                Intent wordActivityIntent = new Intent(
+                        this, MyWordsActivity.class);
+                startActivity(wordActivityIntent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

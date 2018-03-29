@@ -20,7 +20,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @TypeConverters(DateConverter.class)
 public interface WordDao {
 
-    @Query("select * from word")
+    @Query("select * from word order by created_on desc")
     LiveData<List<Word>> getAllWords();
 
     @Query("select * from word where title = :title")

@@ -11,6 +11,8 @@ import com.abhiyaan.androidapp.vocabjournal.db.Word;
 import com.abhiyaan.androidapp.vocabjournal.db.WordDao;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
 
+import java.util.List;
+
 import static com.abhiyaan.androidapp.vocabjournal.AppWebService.BAD_WORD;
 
 /**
@@ -25,6 +27,10 @@ public class AppRepository {
     public AppRepository(Application application){
         appDatabase = AppDatabase.getInMemoryDatabase(application);
         appWebService = new AppWebService();
+    }
+
+    public LiveData<List<Word>> getAllWords(){
+        return appDatabase.wordDao().getAllWords();
     }
 
     public LiveData<WordWithSentences> getWord(String wordTitle){
