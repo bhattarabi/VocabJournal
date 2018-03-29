@@ -2,16 +2,14 @@ package com.abhiyaan.androidapp.vocabjournal.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.View;
 
 /**
  * Created by Binaya Bhattarai on 3/25/2018.
  */
 
 public class WordViewPagerAdapter extends FragmentStatePagerAdapter{
-    private String[] tabTitles = {"Definition", "Usage Examples"};
+    private String[] tabTitles = {"Definition", "My Usage Examples"};
 
     public WordViewPagerAdapter(FragmentManager fm) {
         super(fm);
