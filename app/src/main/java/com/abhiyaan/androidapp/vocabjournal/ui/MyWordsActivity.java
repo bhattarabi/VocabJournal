@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.abhiyaan.androidapp.vocabjournal.R;
 import com.abhiyaan.androidapp.vocabjournal.databinding.ActivityWordBinding;
@@ -15,11 +14,13 @@ import com.abhiyaan.androidapp.vocabjournal.db.Word;
  * Created by Binaya Bhattarai on 3/25/2018.
  */
 
-public class MyWordsActivity extends AppCompatActivity implements WordClickCallback {
+public class MyWordsActivity extends AppCompatActivity
+        implements WordClickCallback{
 
     ActivityWordBinding activityWordBinding;
     WordsListFragment wordsListFragment;
     WordsListViewModel wordsListViewModel;
+
 
 
     @Override

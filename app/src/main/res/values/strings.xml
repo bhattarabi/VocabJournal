@@ -7,4 +7,5 @@
     <string name="enter_sentence_hint">Enter new usage example...</string>
     <string name="my_words">My Words</string>
     <string name="about">About</string>
+    <string name="sort_by">Sort by:</string>
 </resources>

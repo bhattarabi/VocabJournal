@@ -10,6 +10,8 @@ import com.abhiyaan.androidapp.vocabjournal.R;
 import com.abhiyaan.androidapp.vocabjournal.databinding.RecyclerItemWordBinding;
 import com.abhiyaan.androidapp.vocabjournal.db.Word;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,8 +25,6 @@ public class WordsListRecyclerViewAdapter extends
     private WordClickCallback onClickListener;
 
     private RecyclerItemWordBinding recyclerItemWordBinding;
-
-    private List<Word> currentWords;
 
     public WordsListRecyclerViewAdapter(
             List<Word> words, WordClickCallback onClickListener){
@@ -53,8 +53,37 @@ public class WordsListRecyclerViewAdapter extends
     }
 
     public void updateWords(List<Word> newWords){
+        this.allWords  = null;
         this.allWords = newWords;
         notifyDataSetChanged();
+    }
+
+    private void sortWordsByTitle(){
+        Collections.sort(allWords, new Comparator<Word>(){
+            public int compare(Word w1, Word w2){
+                return w1.getTitle().compareTo(w2.getTitle());
+            }
+        });
+    }
+
+    public void sortWords(int sortBy){
+        switch(sortBy){
+            case 0:
+                Collections.sort(allWords, new Comparator<Word>(){
+                    public int compare(Word w1, Word w2){
+                        return w1.getCreatedOn().compareTo(w2.getCreatedOn());
+                    }
+                });
+                break;
+            case 1:
+                sortWordsByTitle();
+                break;
+            case 2:
+                sortWordsByTitle();
+                Collections.reverse(allWords);
+                break;
+            default:
+        }
     }
 
     static class RecyclerViewHolder extends RecyclerView.ViewHolder{

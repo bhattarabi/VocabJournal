@@ -21,7 +21,13 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface WordDao {
 
     @Query("select * from word order by created_on desc")
-    LiveData<List<Word>> getAllWords();
+    LiveData<List<Word>> getWordsRecent();
+
+    @Query("select * from word order by title")
+    LiveData<List<Word>> getWordsAlphabetical();
+
+    @Query("select * from word order by title desc")
+    LiveData<List<Word>> getWordsAlphabeticalDesc();
 
     @Query("select * from word where title = :title")
     LiveData<WordWithSentences> getWordWithSentences(String title);

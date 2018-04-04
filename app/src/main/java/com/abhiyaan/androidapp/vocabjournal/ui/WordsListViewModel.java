@@ -22,7 +22,19 @@ public class WordsListViewModel extends AndroidViewModel {
     public WordsListViewModel(@NonNull Application application) {
         super(application);
         appRepository = new AppRepository(application);
-        myWords = appRepository.getAllWords();
+        myWords = appRepository.getWordsSortByRecent();
+    }
+
+    public void getWordsRecent(){
+        myWords = appRepository.getWordsSortByRecent();
+    }
+
+    public void getWordsAlpha(){
+        myWords = appRepository.getWordsSortByAlpha();
+    }
+
+    public void getWordsAlphaDesc(){
+        myWords = appRepository.getWordsSortByAlphaDesc();
     }
 
     public LiveData<List<Word>> getMyWords() {

@@ -2,13 +2,11 @@ package com.abhiyaan.androidapp.vocabjournal;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.abhiyaan.androidapp.vocabjournal.db.AppDatabase;
 import com.abhiyaan.androidapp.vocabjournal.db.Sentence;
 import com.abhiyaan.androidapp.vocabjournal.db.Word;
-import com.abhiyaan.androidapp.vocabjournal.db.WordDao;
 import com.abhiyaan.androidapp.vocabjournal.db.WordWithSentences;
 
 import java.util.List;
@@ -29,8 +27,16 @@ public class AppRepository {
         appWebService = new AppWebService();
     }
 
-    public LiveData<List<Word>> getAllWords(){
-        return appDatabase.wordDao().getAllWords();
+    public LiveData<List<Word>> getWordsSortByRecent(){
+        return appDatabase.wordDao().getWordsRecent();
+    }
+
+    public LiveData<List<Word>> getWordsSortByAlpha(){
+        return appDatabase.wordDao().getWordsAlphabetical();
+    }
+
+    public LiveData<List<Word>> getWordsSortByAlphaDesc(){
+        return appDatabase.wordDao().getWordsAlphabeticalDesc();
     }
 
     public LiveData<WordWithSentences> getWord(String wordTitle){

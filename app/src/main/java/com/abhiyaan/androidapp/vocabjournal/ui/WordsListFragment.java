@@ -11,13 +11,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.abhiyaan.androidapp.vocabjournal.R;
 import com.abhiyaan.androidapp.vocabjournal.databinding.WordsListFragmentBinding;
 import com.abhiyaan.androidapp.vocabjournal.db.Word;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -25,7 +27,9 @@ import java.util.List;
  * Created by Binaya Bhattarai on 3/24/2018.
  */
 
-public class WordsListFragment extends Fragment{
+public class WordsListFragment extends Fragment
+    implements AdapterView.OnItemSelectedListener {
+
     private WordsListViewModel wordsListViewModel;
     private WordsListRecyclerViewAdapter wordsListRecyclerViewAdapter;
 
@@ -43,7 +47,22 @@ public class WordsListFragment extends Fragment{
         wordsListFragmentBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         wordsListFragmentBinding.recyclerView.setAdapter(wordsListRecyclerViewAdapter);
 
+        setupSpinner();
         return wordsListFragmentBinding.getRoot();
+    }
+
+    private void setupSpinner() {
+        String[] spinnerItems = new String[]{
+                "Recent", "A-Z", "Z-A"
+        };
+
+        Spinner spinner = wordsListFragmentBinding.spinnerSort;
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+                getActivity(), android.R.layout.simple_spinner_item, spinnerItems);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        spinnerAdapter.notifyDataSetChanged();
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -59,5 +78,16 @@ public class WordsListFragment extends Fragment{
                 wordsListRecyclerViewAdapter.updateWords(words);
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        wordsListRecyclerViewAdapter.sortWords(i);
+        wordsListRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
